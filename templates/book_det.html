@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Book detail Page
+{% endblock %}
+
+{% block content %}
+
+    <img src="http://covers.openlibrary.org/b/isbn/{{bookInfo[0][0]}}-M.jpg" width="130px">
+
+    <h3>Book Title: {{bookInfo[0][1]}} </h3>
+    <h4>Isbn Number: {{bookInfo[0][0]}} </h4>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Comment</label>
+            <input type="text" name="review_desc" class="form-control" id="exampleFormControlInput1" placeholder="Please enter comments">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Example select</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="rating">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            </select>
+        </div>
+        <div class="form-group col-sm">
+            <button class="btn btn-success" type="submit">Submit</button>
+        </div>
+    </form>
+
+    {% for review in reviews %}
+        <h5>Review: {{review[1]}} </h5>
+        <h5>Rating: {{review[2]}} </h5>
+        <h6>Posting time: {{review[3]}}  </h6>
+    {% endfor %}
+
+{% endblock %}

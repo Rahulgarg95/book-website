@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Results Page
+{% endblock %}
+
+{% block content %}
+    <h3 id="#result-header"></h3>
+
+            {% for book in books %}
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"> {{book['title']}} </h4>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-text"> Author: {{book['author']}} </h6>
+                            <p class="card-text"> Isbn Number: {{book['isbn']}} </p>
+                            <p class="card-text"> Released Date: {{book['year']}} </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/book/{{book['isbn']}}" class="btn btn-primary">Visit Book</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+{% endblock %}

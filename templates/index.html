@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Homepage
+{% endblock %}
+
+{% block content %}
+    <h2 id="#home-header"> Search for a book of your preference!!!! </h2>
+    <form action="/search" method="GET">
+        <div class="input-group">
+            <input type="text" class="form-control" name="search_book" placeholder="Search with ISBN, Book title, Book Author">
+            <div class="input-group-append">
+            <button class="btn btn-secondary" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
