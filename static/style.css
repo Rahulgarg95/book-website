@@ -1,0 +1,104 @@
+body{
+    letter-spacing: 1px;
+}
+
+#home-header{
+    padding-top: 100px;
+    padding-bottom: 50px;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+#home-form{
+    margin-top: 40px;
+}
+
+::placeholder {
+    color: white;
+}
+
+.fa-search{
+    width:30px;
+}
+
+.btn-style{
+    width: 100px;
+}
+
+#error-msg{
+    margin-top: 80px;
+    text-align: center;
+}
+
+.span-msg{
+    background-color: rgb(68, 65, 65);
+    color: white;
+    padding:10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    letter-spacing: 2px;
+}
+
+#login-header{
+    margin-top: 50px;
+}
+
+#login-content,#login-header{
+    text-align: center;
+    padding:10px;
+}
+
+.span-login{
+    background-color: rgb(68, 65, 65);
+    color: white;
+    padding:10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    letter-spacing: 2px;
+}
+
+input{
+    background-color: rgb(68, 65, 65);
+    color: white;
+}
+
+.results{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#result-header{
+    text-align: center;
+    padding: 30px;
+}
+
+.card{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+}
+
+.details-header{
+    margin: 30px;
+}
+
+.det-content{
+    margin-top:20px;
+    margin-bottom: 30px;
+}
+
+.book-details h5{
+    padding-top: 20px;
+}
+
+.book-comment{
+    padding: 20px;
+    padding-bottom: 10px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    background-color: lightgrey;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+}
+
+.book-comment p{
+    text-align: right;
+    font-weight: 600;
+}

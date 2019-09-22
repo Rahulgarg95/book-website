@@ -6,10 +6,22 @@ Book detail Page
 
 {% block content %}
 
-    <img src="http://covers.openlibrary.org/b/isbn/{{bookInfo[0][0]}}-M.jpg" width="130px">
-
-    <h3>Book Title: {{bookInfo[0][1]}} </h3>
-    <h4>Isbn Number: {{bookInfo[0][0]}} </h4>
+    <div class="row details-header">
+        <div class="col">
+            <img src="http://covers.openlibrary.org/b/isbn/{{bookInfo[0][0]}}-M.jpg" width="250px" height="300px">
+        </div>
+        <div class="col book-details">
+            <h4 class="det-content"> <span class="span-login"> {{bookInfo[0][1]}} </span> </h4>
+            <h5> Isbn Number: <b> {{bookInfo[0][0]}} </b></h5>
+            <h5> Author Name: <b> {{bookInfo[0][2]}} </b></h5>
+            <h5> Published Year: <b> {{bookInfo[0][3]}} </b></h5>
+        </div>
+        <div class="col book-details">
+            <h4 class="det-content"> <span class="span-login"> Goodreads Reviews </span> </h4>
+            <h5> Review Count: <b> {{bookInfo[1]['books'][0]['reviews_count']}} </b></h5>
+            <h5>Average rating: <b> {{bookInfo[1]['books'][0]['average_rating']}} </b></h5>
+        </div>
+    </div>
 
     <form method="POST">
         <div class="form-group">
@@ -27,14 +39,23 @@ Book detail Page
             </select>
         </div>
         <div class="form-group col-sm">
-            <button class="btn btn-success" type="submit">Submit</button>
+            <button class="btn btn-dark" type="submit">Submit</button>
         </div>
     </form>
 
     {% for review in reviews %}
-        <h5>Review: {{review[1]}} </h5>
-        <h5>Rating: {{review[2]}} </h5>
-        <h6>Posting time: {{review[3]}}  </h6>
+        <section class="book-comment">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4>{{review[0]}}</h4>
+                </div>
+                <div class="col-sm-6">
+                    <p>{{review[3]}}</p>
+                </div>
+            </div>
+            <h5>Review: {{review[1]}} </h5>
+            <h6>Rating: {{review[2]}} </h6>
+        </div>
     {% endfor %}
 
 {% endblock %}

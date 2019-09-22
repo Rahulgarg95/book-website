@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <h3 id="login-header">Register page</h3>
+    <h3 id="login-header"><span class="span-login"> Register page </span></h3>
     <p id="login-content">Please create an account to proceed further</p>
     <form action="/register" class="was-validated" method="POST">
         <div class="form-group">
@@ -25,7 +25,7 @@
             <div class="invalid-feedback">Please enter password again.</div>
         </div>
         <div class="form-group">
-            <label for="pwd">Password:</label>
+            <label for="pwd">Email Id:</label>
             <input type="text" class="form-control" id="reg_email" placeholder="Enter email" name="email" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please enter email id.</div>

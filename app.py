@@ -1,7 +1,7 @@
 import os
 import json
 
-from flask import Flask, session, render_template, request, redirect, flash
+from flask import Flask, session, render_template, request, redirect, flash, jsonify
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -30,6 +30,8 @@ db=db()
 
 @app.route("/login", methods=["GET","POST"])
 def login():
+    session.clear()
+
     if(request.method == "POST"):
         #Checking if username is entered
         if(request.form.get("username")):
@@ -65,7 +67,6 @@ def login():
 
 @app.route("/logout")
 def logout():
-    """ Log user out """
 
     # Forget any user ID
     session.clear()
@@ -76,6 +77,7 @@ def logout():
 #User registeration
 @app.route("/register", methods=["GET","POST"])
 def register():
+    session.clear()
     #User submitting the form
     if(request.method == "POST"):
         #Checking if username is entered
@@ -120,7 +122,6 @@ def register():
 
         #Making entry in db
         db.execute("INSERT INTO users (user_id,password,email) VALUES(:user_name, :password,:email_id)", {"user_name":name,"password":hash_pass,"email_id":email_id})
-
         db.commit()
 
         return redirect("/login")
@@ -129,10 +130,15 @@ def register():
 
 @app.route("/")
 def index():
+    if(session.get("user_name") is None):
+        return redirect("/login")
     return render_template("index.html")
 
 @app.route("/search", methods=["GET"])
 def search_book():
+    if(session.get("user_name") is None):
+        return redirect("/login")
+
     if(not request.args.get("search_book")):
         msg="Please enter book details"
         return render_template("error.html",msg=msg)
@@ -154,7 +160,8 @@ def search_book():
 
 @app.route("/book/<isbn>", methods=["GET","POST"])
 def book_details(isbn):
-
+    if(session.get("user_name") is None):
+        return redirect("/login")
     if request.method == "POST":
         current_user=session["user_name"]
 
@@ -169,7 +176,6 @@ def book_details(isbn):
         book_rating=int(book_rating)
 
         db.execute("INSERT INTO reviews (book_id, user_name, review_desc, rating) VALUES(:book_id, :user_name, :review_desc, :rating)",{"book_id":isbn, "user_name":current_user, "review_desc":comment, "rating":book_rating})
-
         db.commit()
 
         return redirect("/book/" + isbn)
@@ -182,7 +188,6 @@ def book_details(isbn):
         query=requests.get('https://www.goodreads.com/book/review_counts.json',params={"key":api_key, "isbns": isbn})
 
         response=query.json()
-
         bookinfo.append(response)
 
         result=db.execute("SELECT users.user_id,review_desc,rating,to_char(comment_ts, 'DD Mon YY - HH24:MI:SS') as comment_ts FROM users INNER JOIN reviews ON users.user_id = reviews.user_name WHERE book_id=:isbn ORDER BY comment_ts",{"isbn":isbn})
@@ -194,3 +199,36 @@ def book_details(isbn):
         print("Reviews: " + str(reviews))
 
         return render_template("book_det.html", bookInfo=bookinfo, reviews=reviews)
+
+@app.route("/api/<isbn>", methods=["GET"])
+def book_api(isbn):
+    if(session.get("user_name") is None):
+        return redirect("/login")
+
+    row=db.execute("SELECT title,year,author,isbn FROM books WHERE isbn=:isbn",{"isbn":isbn})
+
+    # Error checking
+    if row.rowcount != 1:
+        return jsonify({"Error": "Invalid book ISBN"}), 422
+
+    det=row.fetchone()
+    result=dict(det.items())
+    api_key='yu2H1WDzEBGlVEnPezV9Jg'
+    query=requests.get('https://www.goodreads.com/book/review_counts.json',params={"key":api_key, "isbns": isbn})
+    response=query.json()
+    print(response)
+    reviews_count=response['books'][0]['reviews_count']
+    average_rating=response['books'][0]['average_rating']
+
+    print("Reviews Count: " + str(reviews_count))
+    print("Average Rating: " + str(average_rating))
+
+    result['reviews_count']=reviews_count
+    result['average_rating']=average_rating
+
+    print("Api call: " + str(result))
+
+    return jsonify(result)
+
+if __name__=="__main__":
+    app.run(debug=True)

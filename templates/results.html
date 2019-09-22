@@ -5,23 +5,23 @@ Results Page
 {% endblock %}
 
 {% block content %}
-    <h3 id="#result-header"></h3>
-
+    <h3 id="result-header"> Search results!!!!!!!!!! </h3>
+            <div class="row">
             {% for book in books %}
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title"> {{book['title']}} </h4>
-                        </div>
-                        <div class="card-body">
+                <div class="col-sm-3 results">
+                    <div class="card" style="border-color:rgb(68, 65, 65)">
+                        <img class="card-img-top" src="http://covers.openlibrary.org/b/isbn/{{book['isbn']}}-M.jpg" height="210px">    
+                        <div class="card-body" style="border-color:rgb(68, 65, 65)">
+                            <h6 class="card-title"> <b>{{book['title']}} </b></h6>
                             <h6 class="card-text"> Author: {{book['author']}} </h6>
                             <p class="card-text"> Isbn Number: {{book['isbn']}} </p>
                             <p class="card-text"> Released Date: {{book['year']}} </p>
                         </div>
-                        <div class="card-footer">
-                            <a href="/book/{{book['isbn']}}" class="btn btn-primary">Visit Book</a>
+                        <div class="card-footer" style="border-color:rgb(68, 65, 65)">
+                            <a href="/book/{{book['isbn']}}" class="btn btn-dark btn-style">Visit Book</a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
+        </div>
 {% endblock %}
